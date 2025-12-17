@@ -1,99 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Catalog</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-        }
-        
-        header {
-            background-color: #fff;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        header img {
-            max-width: 700px;
-            height: auto;
-            margin-bottom: 15px;
-        }
-        
-        nav {
-            text-align: center;
-            padding: 15px;
-        }
-        
-        nav a {
-            text-decoration: none;
-            margin: 0 20px;
-        }
-        
-        main {
-            padding: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .category-section {
-            margin-bottom: 0;
-        }
-        
-        .category-title {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
-            text-transform: uppercase;
-        }
-        
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        
-        .product-item {
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .product-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxuria - Premium Luxury Store</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:linear-gradient(135deg,#0f0f0f,#1a1a1a); color:#eee; font-family:'Segoe UI',Arial,sans-serif; min-height:100vh; }
+.navbar { background:#000; padding:15px 30px; position:sticky; top:0; z-index:100; text-align:center; }
+.navbar-top { display:flex; justify-content:space-between; align-items:center; max-width:1400px; margin:auto; }
+.logo { font-size:28px; font-weight:300; letter-spacing:2px; color:#ffd700; }
+.icons i { font-size:22px; margin-left:20px; cursor:pointer; position:relative; }
+#cart-count { position:absolute; top:-8px; right:-8px; background:#ffd700; color:#000; width:18px; height:18px; border-radius:50%; font-size:12px; display:flex; align-items:center; justify-content:center; font-weight:bold; }
+.search { margin:15px 0; max-width:800px; position:relative; width:100%; }
+.search input { width:100%; padding:15px 50px; border-radius:50px; background:#111; border:1px solid #333; color:#eee; font-size:16px; }
+.search i.fa-search { position:absolute; left:20px; top:50%; transform:translateY(-50%); color:#888; }
+.search i.fa-microphone { position:absolute; right:20px; top:50%; transform:translateY(-50%); color:#888; cursor:pointer; }
+.menu { display:flex; justify-content:center; flex-wrap:wrap; gap:20px; margin-top:10px; }
+.menu a { color:#ddd; text-decoration:none; font-weight:300; }
+.menu a:hover { color:#ffd700; }
+
+.offers { background:linear-gradient(135deg,#4a0e0e,#2a0a0a); color:#ffd700; text-align:center; padding:20px; font-size:24px; margin-bottom:40px; }
+
+section { padding:50px 30px; text-align:center; }
+h2 { font-size:36px; margin-bottom:40px; font-weight:300; color:#fff; }
+.products h2 { color:#ffd700; font-size:42px; }
+
+.grid { display:grid; gap:30px; max-width:1400px; margin:auto; }
+.category-grid { grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); }
+.brand-grid { grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); }
+.product-grid { grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); }
+
+.card { background:#111; border-radius:15px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.4); transition:transform .3s; }
+.card:hover { transform:translateY(-10px); }
+.card img { width:100%; height:220px; object-fit:cover; transition:transform .4s; }
+.card:hover img { transform:scale(1.05); }
+.card h3, .brand-card h3 { padding:15px; color:#ffd700; }
+.card p { padding:0 15px 15px; color:#aaa; font-size:14px; }
+.btn { padding:10px 20px; background:transparent; border:1px solid #ddd; color:#ddd; cursor:pointer; margin:10px; transition:.3s; }
+.btn:hover { background:#ffd700; color:#000; border-color:#ffd700; }
+
+.product-info { padding:20px; }
+.product-info h3 { font-size:22px; color:#fff; margin-bottom:10px; }
+.product-info p { font-size:24px; color:#ffd700; font-weight:bold; margin:15px 0; }
+.add-to-cart { width:100%; padding:15px; background:transparent; color:#ffd700; border:2px solid #ffd700; font-size:16px; cursor:pointer; transition:.3s; }
+.add-to-cart:hover { background:#ffd700; color:#000; }
+
+.cart-section { background:#111; margin:40px; padding:50px; border-radius:15px; border:1px solid #333; }
+#cart-items > div { padding:10px 0; border-bottom:1px solid #333; max-width:800px; margin:auto; text-align:left; }
+
+footer { text-align:center; padding:30px; background:#000; color:#888; font-size:14px; }
+
+@media (max-width:768px) {
+  .product-grid { grid-template-columns:1fr 1fr; }
+  .brand-grid { grid-template-columns:1fr; }
+}
+</style>
 </head>
 <body>
-    <header>
-        <img src="" alt="LOGO">
-        <hr>
-    </header>
-    <NAV>
-        <select name="LAPTOPS"
-    </NAV>
-         
+
+<nav class="navbar">
+  <div class="navbar-top">
+    <div><span><i class="fas fa-diamond"></i>LUXE</span> <span><i class="fas fa-diamond"></i>INDI</span></div>
+    <h1 class="logo">LUXURIA</h1>
+    <div class="icons">
+      <i class="fas fa-user"></i>
+      <i class="fas fa-shopping-bag" id="cart-icon"><span id="cart-count">0</span></i>
+      <i class="fas fa-gift"></i>
+    </div>
+  </div>
+  <div class="search">
+    <i class="fas fa-search"></i>
+    <input type="text" placeholder="What are you looking for?">
+    <i class="fas fa-microphone"></i>
+  </div>
+  <div class="menu">
+    <a href="#">New In</a><a href="#">Men</a><a href="#">Women</a><a href="#">Kids</a><a href="#">Beauty</a>
+    <a href="#">Home</a><a href="#">Watches & Jewellery</a><a href="#">Indiluxe</a><a href="#">Brands</a>
+  </div>
+</nav>
+
+<section class="offers">
+  <strong>SEASON OF CELEBRATION</strong> | Extra 10% off* with Code <strong>LUXSOC</strong>
+</section>
+
+<section>
+  <h2>Popular Categories</h2>
+  <div class="grid category-grid">
+    <!-- Keep your 12 category cards here (unchanged images/text) -->
+    <div class="card"><img src="https://ctfassetsprod.tatacliq.com/?url=https://images.ctfassets.net/69qx72t49ip2/780hk2nSGJtJZOf1cCk2m9/0b5b64455fce6c64c6be2f41b4f6ce71/Group_277132978.png" alt="Men's Clothing"><p>Men's Clothing</p></div>
+    <!-- ... repeat other 11 category cards ... -->
+ 
+  
+            <div class="card">
+                <img src="https://ctfassetsprod.tatacliq.com/?url=https://images.ctfassets.net/69qx72t49ip2/7kL95afJXYs51OnfGUPky3/6dd81a4cedcd36b9b1c9b7dad31b0c7b/Group_277132987__1_.png" alt="Men's Footwear">
+                <p>Men's Footwear</p>
+            </div>
+            <div class="card">
+                <img src="https://ctfassetsprod.tatacliq.com/?url=https://images.ctfassets.net/69qx72t49ip2/30Hp6rFTpCF0USM2M7dTSL/5fdef92a3702137c98899a3e4c4b0ae6/Group_277132988.png" alt="Women's Clothing">
+                <p>Women's Clothing</p>
+            </div>
+            <div class="card">
+                <img src="https://ctfassetsprod.tatacliq.com/?url=https://images.ctfassets.net/69qx72t49ip2/4BvjiRh6zzYH14YeP2c9rC/db9f916c84a26071f4d410fd84f83f36/Group_277132980.png" alt="Women's Footwear">
+                <p>Women's Footwear</p>
+            </div>
+            <div class="card">
+                <img src="https://ctfassetsprod.tatacliq.com/?url=https://images.ctfassets.net/69qx72t49ip2/2gWrXGzHpUPX5s3RnvfyYE/379ab0aab771be06d10ad4ba98270e3a/Group_277132986.png" alt="Watches">
+                <p>Watches</p>
+            </div>
+            <div class="card">
+                <img src="https://ctfassetsprod.tatacliq.com/?url=https://images.ctfassets.net/69qx72t49ip2/23eqgnZHPoiWgHuZie67wz/20b62fcf81acb715d80c4ede0de20321/Group_277132990.png" alt="Athleisure">
+                <p>Athleisure</p>
+            </div> 
+        </div>
+</section>
+
+<section style="background:#0a0a0a;">
+  <h2>Brands We Love</h2>
+  <div class="grid brand-grid">
+    <div class="card brand-card"><img src="https://ctfassetsprod.tatacliq.com/?url=https://images.ctfassets.net/69qx72t49ip2/2okSXLZwFp5eazQLokDJok/64c36885eac22fa71a56e3f953ca5662/Adidas_Originals.jpg" alt="Adidas"><h3>Adidas</h3><p>Sneakers loved by hip-hop stars & sports royalty</p><button class="btn">SHOP</button></div>
+  </div>
+  <div class="card brand-card">
+                <img src="https://ctfassetsprod.tatacliq.com/?url=https://images.ctfassets.net/69qx72t49ip2/3W0YS7KgSQwlk31ngTEP58/84d130d487ec04e8e88942bd55ae3aac/Aldo.jpg" alt="Adidas">
+                <h3>Aldo</h3>
+                <p>Where bold design meets effortless stride</p>
+                <button class="btn">SHOP</button>
+            </div>
+            <div class="card brand-card">
+                <img src="https://ctfassetsprod.tatacliq.com/?url=https://images.ctfassets.net/69qx72t49ip2/qhSjlnau40T8XmZa4p0tS/485988ffe1036871ded8f0bb140ce1dc/Maserati.jpg" alt="Maserati">
+                <h3>Maserati</h3>
+                <p>Italian timepieces in supercar-inspired designs</p>
+                <button class="btn">SHOP</button>
+            </div>
+</section>
+
+<section class="products">
+  <h2>Exclusive Collection</h2>
+  <div class="grid product-grid">
+    <div class="card">
+      <img src="https://imgs.search.brave.com/fySorkbioyJHb64LF0bW4qqpaBRsrHYkyc6AEMCRe0k/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuaGVsbG9tYWdh/emluZS5jb20vaG9y/aXpvbi9vcmlnaW5h/bF9hc3BlY3RfcmF0/aW8vYTY0YTIxMTk2/NDMzLWxlYXRoZXIt/dHJ1Y2tlci1qYWNr/ZXQuanBn" alt="Leather Jacket">
+      <div class="product-info">
+        <h3>Premium Leather Jacket</h3><p>₹24,999</p>
+        <button class="add-to-cart" data-name="Premium Leather Jacket" data-price="24999">Add to Bag</button>
+      </div>
+    </div>
+    <!-- Repeat the other 5 product cards with same structure -->
+    <div class="card">
+      <img src="https://imgs.search.brave.com/22dWVlvTXskuE-pZIgE0Q5QI85B-rq5hM2CzXUAl9WY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/OTkxNDM4NDQ2Nzgt/NmYyMzJiYjE2YWU2/P2ZtPWpwZyZxPTYw/Jnc9MzAwMCZpeGxp/Yj1yYi00LjEuMCZp/eGlkPU0zd3hNakEz/ZkRCOE1IeHpaV0Z5/WTJoOE1USjhmR2R2/YkdRbE1qQjNZWFJq/YUh4bGJud3dmSHd3/Zkh4OE1BPT0" alt="Gold Watch">
+      <div class="product-info"><h3>Luxury Gold Watch</h3><p>₹89,999</p><button class="add-to-cart" data-name="Luxury Gold Watch" data-price="89999">Add to Bag</button></div>
+    </div>
+    <!-- Add the remaining 4 product cards similarly -->
+      <div class="card">
+      <img src="https://imgs.search.brave.com/N1apiDIsxWCWfBsGduvE27Ef9UtPV7Ko_ET2YiLBbmk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9sb3Zl/dGhhdGJhZ2V0Yy5j/b20vY2RuL3Nob3Av/cHJvZHVjdHMvUHJh/ZGFCbGFja1ZpdGVs/bG9EYWlub0hvYm8t/MS5qcGc_dj0xNjc3/MjYwNTkxJndpZHRo/PTEyMDA" alt="Gold Watch">
+      <div class="product-info"><h3>Designer Handbag</h3><p>₹54,999</p><button class="add-to-cart" data-name="Luxury Gold Watch" data-price="89999">Add to Bag</button></div>
+    </div>
+
+      <div class="card">
+      <img src="https://imgs.search.brave.com/kcIb4fIUYB5q7KTMmGEDgNILKiDCtyLFhENrLVG28k0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMubXludGFzc2V0/cy5jb20vZHByXzIs/cV82MCx3XzIxMCxj/X2xpbWl0LGZsX3By/b2dyZXNzaXZlL2Fz/c2V0cy9pbWFnZXMv/MjAyNS9PQ1RPQkVS/LzE2L1RCMHhhR1dY/X2E2OTA5MzM0OTk1/NDQwYmZhZDkzYWFh/ODhiNjZmZDEwLmpw/Zw" alt="Gold Watch">
+      <div class="product-info"><h3>Italian Silk Shirt</h3><p>₹18,999</p><button class="add-to-cart" data-name="Luxury Gold Watch" data-price="89999">Add to Bag</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="cart-section">
+  <h2>Your Selection</h2>
+  <div id="cart-items"><p style="color:#888;">Your bag is empty</p></div>
+  <p style="font-size:24px;margin-top:30px;color:#ffd700;"><strong>Total: ₹<span id="cart-total">0</span></strong></p>
+</section>
+
+<footer>&copy; 2025 Luxuria - Premium Luxury Lifestyle | Semester 1 Final Project</footer>
+
+<script>
+const cart = [];
+const updateCart = () => {
+  const countEl = document.getElementById('cart-count');
+  const itemsEl = document.getElementById('cart-items');
+  const totalEl = document.getElementById('cart-total');
+  countEl.textContent = cart.length;
+  totalEl.textContent = cart.reduce((sum,i)=>sum+i.price,0).toLocaleString();
+  itemsEl.innerHTML = cart.length === 0 ? '<p style="color:#888;">Your bag is empty</p>' :
+    cart.map(item => `<div>${item.name} - ₹${item.price.toLocaleString()}</div>`).join('');
+};
+document.querySelectorAll('.add-to-cart').forEach(btn => {
+  btn.addEventListener('click', () => {
+    cart.push({ name: btn.dataset.name, price: +btn.dataset.price });
+    updateCart();
+  });
+});
+</script>
 </body>
-</html>   
+</html>
